@@ -33,7 +33,7 @@ Spider entire sites like so:
 Extract geodata from specific page like so:
 
   require 'geo-spider'
-  page = GeoSpider::Page.new("http://www.nothingtoseehere.net/2008/08/bank_of_asia_headquarters_bang_1.html")
+  page = GeoSpider::Page.new("http://www.nothingtoseehere.net/2008/07/t34_tank_london_1.html")
   puts page.locations.inspect
 
 == REQUIREMENTS:

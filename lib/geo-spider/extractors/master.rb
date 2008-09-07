@@ -7,15 +7,17 @@ module GeoSpider
     
     class Master < GeoSpider::Extractors::Base
       
-      DEFAULT_EXTRACTORS = [:postcode, :microformat]
+      # TODO: Implement the below.
       
-      def extractors
-        @extractors || DEFAULT_EXTRACTORS
-      end
-
-      def extractors=(extractors)
-        @extractors = extractors
-      end
+      # DEFAULT_EXTRACTORS = [:postcode, :microformat]
+      # 
+      # def extractors
+      #   @extractors || DEFAULT_EXTRACTORS
+      # end
+      # 
+      # def extractors=(extractors)
+      #   @extractors = extractors
+      # end
       
       def locations
         microformat_locations = Extractors::Microformat.new(@element).locations

@@ -22,10 +22,14 @@ module GeoSpider
         
       end
       
+      def api_key=(api_key)
+        @api_key
+      end
+      
       private
       
       def geocoder
-        Graticule.service(:yahoo).new "YAHOO_API_KEY"
+        Graticule.service(:yahoo).new @api_key
       end
       
     end

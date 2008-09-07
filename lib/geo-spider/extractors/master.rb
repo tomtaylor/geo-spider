@@ -13,7 +13,7 @@ module GeoSpider
         @extractors || DEFAULT_EXTRACTORS
       end
 
-      def set_extractors(extractors)
+      def extractors=(extractors)
         @extractors = extractors
       end
       

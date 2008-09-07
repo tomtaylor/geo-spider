@@ -24,7 +24,7 @@ It is current in use behind the scenes of the Geoblogomatic <http://www.geoblogo
 Spider entire sites like so:
 
   require 'geo-spider'
-  site = GeoSpider::Site.new("http://www.example.com")
+  site = GeoSpider::Site.new("http://www.piecesofhackney.co.uk")
   
   site.each_page do |page|
     puts page.locations.inspect

@@ -7,3 +7,17 @@ require 'open-uri'
 
 require 'geo-spider/page'
 require 'geo-spider/site'
+
+module GeoSpider
+  
+  DEFAULT_USER_AGENT = 'geo-spider (http://github.com/tomtaylor/geo-spider)'
+  
+  def self.user_agent
+    @user_agent || DEFAULT_USER_AGENT
+  end
+  
+  def self.user_agent=(user_agent)
+    @user_agent = user_agent
+  end
+  
+end

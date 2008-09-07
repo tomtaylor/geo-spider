@@ -53,7 +53,7 @@ module GeoSpider
     end
     
     def raw_http
-      open(self.url)
+      open(self.url, 'User-Agent' => GeoSpider::user_agent)
     end
     
     def internal_url?(url_to_test)

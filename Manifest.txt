@@ -19,8 +19,9 @@ script/console
 script/destroy
 script/generate
 setup.rb
-spec/assets/ebcb/2008/04/acton-town-cafe.html
-spec/assets/pages/microformat_and_postcode.html
+spec/assets/pages/multiple_postcodes_and_microformats.html
+spec/assets/pages/page_with_links.html
+spec/assets/pages/separate_microformat_and_postcode.html
 spec/assets/pages/single_microformat.html
 spec/assets/pages/single_postcode.html
 spec/geo-spider/page_spec.rb

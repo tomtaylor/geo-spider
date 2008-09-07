@@ -7,19 +7,20 @@ module GeoSpider
     
     attr_reader :url, :title
     
+    DEFAULT_CONTENT_CSS_SELECTOR = "body" # Find locations within the entire body by default
+    
     # Create a new page based on the URL.
     
     def initialize(url, options = {})
       @url = url
       @site = options[:site]
-      
-      # hpricot_doc # to force fetching of the page on creation of the Page object, otherwise it delays until you try and fetch the locations or links.
+      @content_css_selector = options[:content_css_selector] || DEFAULT_CONTENT_CSS_SELECTOR
     end
     
     # Returns an array of Location objects based on the locations found in the page.
     
     def locations
-      body_element = hpricot_doc.at(".entry-body")
+      body_element = hpricot_doc.at(@content_css_selector)
       master_extractor = Extractors::Master.new(body_element)
       master_extractor.locations
     end

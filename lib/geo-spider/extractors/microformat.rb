@@ -9,7 +9,7 @@ module GeoSpider
       def locations
         @element.search("abbr[@class='geo'][@title]").map do |geo|
           latitude, longitude = geo.attributes["title"].split(";")
-          text = geo.inner_html
+          text = geo.inner_text
           Location.new(:latitude => latitude.to_f, :longitude => longitude.to_f, :title => text)
         end
       end

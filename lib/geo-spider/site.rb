@@ -8,7 +8,7 @@ module GeoSpider
       @url = URI.parse(url)
     end
     
-    def each_post(options = {}, &block)
+    def each_page(options = {}, &block)
       queue = [self.url.to_s]
       seen = []
       
@@ -22,8 +22,14 @@ module GeoSpider
       end
     end
     
-    def posts(options = {})
+    def pages(options = {})
+      pages = []
       
+      self.each_page(options) do |page|
+        pages << page
+      end
+      
+      pages
     end
     
     

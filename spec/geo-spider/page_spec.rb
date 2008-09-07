@@ -13,9 +13,9 @@ describe Page, "with a single microformat which is being parsed" do
   
   it "should have the right location details" do
     location = @page.locations.first
-    location.latitude.should == 51.503330
-    location.longitude.should == -0.279870
-    location.title.should == "the Acton Town Cafe"
+    location.latitude.should == 51.51757
+    location.longitude.should == -0.13877
+    location.title.should == "BBC Broadcasting House"
   end
 end
 
@@ -46,7 +46,7 @@ end
 describe Page, "with a microformat and a postcode being parsed" do
   
   before(:each) do
-    OpenURI.should_receive(:open_uri).and_return(page_as_string('microformat_and_postcode.html'))
+    OpenURI.should_receive(:open_uri).and_return(page_as_string('separate_microformat_and_postcode.html'))
     @page = Page.new("http://www.example.com")
     
     mock_geocoder_result = OpenStruct.new( {:location => [51.000000, -1.000000]} )
@@ -58,14 +58,14 @@ describe Page, "with a microformat and a postcode being parsed" do
     @page.locations.length.should == 2
   end
   
-  it "should have the right details for the first" do
+  it "should have the right details for the microformat" do
     location = @page.locations.first
-    location.latitude.should == 51.503330
-    location.longitude.should == -0.279870
-    location.title.should == "the Acton Town Cafe"
+    location.latitude.should == 51.503571
+    location.longitude.should == -0.0745
+    location.title.should == "Lafone Street"
   end
   
-  it "should have the right details for the second" do
+  it "should have the right details for the postcode" do
     location = @page.locations.last
     location.latitude.should == 51.0
     location.longitude.should == -1.0
@@ -78,7 +78,8 @@ end
 describe Page, "which is not part of a site" do
   
   before(:each) do
-    @page = Page.new("http://russelldavies.typepad.com/eggbaconchipsandbeans/2008/04/acton-town-cafe.html")
+    # OpenURI.should_receive(:open_uri).and_return(page_as_string('page_with_links.html'))
+    @page = Page.new("http://www.waffles.com")
   end
   
   it "should raise if you try and get the internal_links" do
@@ -90,17 +91,17 @@ end
 describe Page, "which is part of a site" do
   
   before(:each) do
-    OpenURI.should_receive(:open_uri).and_return(page_as_string('single_microformat.html'))
-    @site = Site.new("http://russelldavies.typepad.com/eggbaconchipsandbeans/")
-    @page = Page.new("http://russelldavies.typepad.com/eggbaconchipsandbeans/2008/04/acton-town-cafe.html", :site => @site)
+    OpenURI.should_receive(:open_uri).and_return(page_as_string('page_with_links.html'))
+    @site = Site.new("http://www.example.com/")
+    @page = Page.new("http://www.example.com/waffles", :site => @site)
   end
   
   it "should be able to extract them all" do
-    @page.links.length.should == 181
+    @page.links.length.should == 2
   end
   
   it "should be able to extract just the internal links" do
-    @page.internal_links.length.should == 71
-    @page.internal_links.reject { |l| l =~ /^http:\/\/russelldavies.typepad.com\/eggbaconchipsandbeans\// }.length.should == 0 
+    @page.internal_links.length.should == 1
+    @page.internal_links.reject { |l| l =~ /^http:\/\/www.example.com\// }.length.should == 0 
   end
 end

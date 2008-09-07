@@ -5,9 +5,10 @@ module GeoSpider
   
   class Page
     
-    attr_reader :url, :title
+    attr_reader :url
     
     DEFAULT_CONTENT_CSS_SELECTOR = "body" # Find locations within the entire body by default
+    DEFAULT_TITLE_CSS_SELECTOR = "title"
     
     # Create a new page based on the URL.
     
@@ -15,6 +16,11 @@ module GeoSpider
       @url = url
       @site = options[:site]
       @content_css_selector = options[:content_css_selector] || DEFAULT_CONTENT_CSS_SELECTOR
+      @title_css_selector = options[:title_css_select] || DEFAULT_TITLE_CSS_SELECTOR
+    end
+    
+    def title
+      hpricot_doc.at(@title_css_selector).inner_html
     end
     
     # Returns an array of Location objects based on the locations found in the page.

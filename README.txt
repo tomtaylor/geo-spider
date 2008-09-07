@@ -5,27 +5,39 @@
 
 == DESCRIPTION:
 
-Tools for spidering websites/blogs for their geodata.
+Tool for spidering websites/blogs, extracting geodata from specific pages.
+
+Starting at a base URL, it will spider every page underneath, returning pages which have a URL that matches a desired pattern.
+
+The typical use case is spidering an entire blog for posts which contain geodata.
+
+Different methods for extracting geodata can be used. It currently supports UK postcodes and the abbr design pattern geo microformat <http://microformats.org/wiki/geo>.
+
+It is current in use behind the scenes of the Geoblogomatic <http://www.geoblogomatic.com>
 
 == FEATURES/PROBLEMS:
 
-* FIX (list of features or problems)
+* Still very much in development.
 
 == SYNOPSIS:
 
-  FIX (code sample of usage)
+  require 'geo-spider'
+  site = GeoSpider::Site.new("http://www.example.com")
+  
+  site.each_page do |page|
+    puts page.locations.inspect
+  end
 
 == REQUIREMENTS:
 
-* Hpricot
-* open-uri
-* Graticule
+* hpricot (http://code.whytheluckystiff.net/hpricot/) - for HTML parsing
+* graticule (http://graticule.rubyforge.org/) - for geocoding
 
 == LICENSE:
 
 (The MIT License)
 
-Copyright (c) 2008 FIXME full name
+Copyright (c) 2008 Tom Taylor
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

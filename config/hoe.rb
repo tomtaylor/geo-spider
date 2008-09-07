@@ -2,7 +2,7 @@ require 'geo-spider/version'
 
 AUTHOR = 'Tom Taylor'  # can also be an array of Authors
 EMAIL = "tom@tomtaylor.co.uk"
-DESCRIPTION = "description of gem"
+DESCRIPTION = "Tool for spidering websites, extracting pages with geodata."
 GEM_NAME = 'geo-spider' # what ppl will type to install your gem
 RUBYFORGE_PROJECT = 'geospider' # The unix name for your project
 HOMEPATH = "http://#{RUBYFORGE_PROJECT}.rubyforge.org"

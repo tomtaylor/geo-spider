@@ -8,6 +8,7 @@ end
 
 $:.unshift(File.dirname(__FILE__) + '/../lib')
 require 'geo-spider'
+require 'ostruct'
 include GeoSpider
 
 def page_as_string(page_path)

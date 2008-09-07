@@ -1,5 +1,5 @@
 require 'geo-spider/location'
-require 'geo-spider/extractors/microformat'
+require 'geo-spider/extractors/master'
 
 module GeoSpider
   
@@ -13,7 +13,8 @@ module GeoSpider
     
     def locations
       body_element = hpricot_doc.at(".entry-body")
-      Extractors::Microformat.new(body_element).locations
+      master_extractor = Extractors::Master.new(body_element)
+      master_extractor.locations
     end
     
     private

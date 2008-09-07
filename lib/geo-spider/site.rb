@@ -12,7 +12,7 @@ module GeoSpider
       
     end
     
-    def posts
+    def posts(options = {})
       
     end
     

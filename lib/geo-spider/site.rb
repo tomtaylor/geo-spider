@@ -11,17 +11,18 @@ module GeoSpider
     end
     
     def each_page(options = {}, &block)
-      regexp = options[:regexp] || DEFAULT_REGEXP
-      content_css_selector = options[:content_css_selector]
+      regexp = options.delete(:regexp) || DEFAULT_REGEXP
+      
+      options = options.merge( { :site => self } )
       
       queue = [self.url.to_s]
       seen = []
       
       until queue.empty? do
         url = queue.shift
-        yield page = Page.new(url, :site => self, :content_css_selector => content_css_selector) if url =~ regexp
+        yield page = Page.new(url, options) if url =~ regexp
         seen << url
-        next_links = (page.internal_links - seen - queue)
+        next_links = (page.internal_links - seen - queue) # only add internal links that we've not seen or already have queued.
         queue.concat(next_links)
       end
     end

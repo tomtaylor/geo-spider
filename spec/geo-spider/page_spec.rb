@@ -74,11 +74,24 @@ describe Page, "with a microformat and a postcode being parsed" do
   
 end
 
-describe Page, "with lots of links" do
+describe Page, "which is not part of a site" do
+  
+  before(:each) do
+    @page = Page.new("http://russelldavies.typepad.com/eggbaconchipsandbeans/2008/04/acton-town-cafe.html")
+  end
+  
+  it "should raise if you try and get the internal_links" do
+    lambda { @page.internal_links }.should raise_error
+  end
+  
+end
+
+describe Page, "which is part of a site" do
   
   before(:each) do
     OpenURI.should_receive(:open_uri).and_return(page_as_string('single_microformat.html'))
-    @page = Page.new("http://russelldavies.typepad.com/eggbaconchipsandbeans/")
+    @site = Site.new("http://russelldavies.typepad.com/eggbaconchipsandbeans/")
+    @page = Page.new("http://russelldavies.typepad.com/eggbaconchipsandbeans/2008/04/acton-town-cafe.html", :site => @site)
   end
   
   it "should be able to extract them all" do

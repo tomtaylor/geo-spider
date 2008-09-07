@@ -9,6 +9,7 @@ module GeoSpider
     
     def initialize(url, options = {})
       @url = url
+      @site = options[:site]
     end
     
     def locations
@@ -24,6 +25,7 @@ module GeoSpider
     end
     
     def internal_links
+      raise("Cannot discover internal links without knowing what site this page is part of.") if @site.nil?
       links.select { |l| internal_url?(l) }
     end
     

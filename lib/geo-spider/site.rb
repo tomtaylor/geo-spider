@@ -9,7 +9,17 @@ module GeoSpider
     end
     
     def each_post(options = {}, &block)
+      queue = [self.url.to_s]
+      seen = []
       
+      until queue.empty? do
+        url = queue.shift
+        page = Page.new(url, :site => self)
+        yield page
+        seen << url
+        next_links = (page.internal_links - seen - queue)
+        queue.concat(next_links)
+      end
     end
     
     def posts(options = {})

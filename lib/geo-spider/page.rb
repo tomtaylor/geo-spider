@@ -17,6 +17,16 @@ module GeoSpider
       master_extractor.locations
     end
     
+    def links
+      hpricot_doc.search("a[@href]").map do |a|
+        normalize_url(a.attributes["href"])
+      end.uniq
+    end
+    
+    def internal_links
+      links.select { |l| internal_url?(l) }
+    end
+    
     private
     
     def hpricot_doc
@@ -25,6 +35,21 @@ module GeoSpider
     
     def raw_http
       open(self.url)
+    end
+    
+    def internal_url?(url_to_test)
+      url_to_test[0, @url.to_s.length] == @url
+    end
+    
+    def normalize_url(link_url)
+      begin
+        link_url = URI.parse(link_url)
+        link_url.merge(@url) unless link_url.absolute?
+        link_url.fragment = nil
+        link_url.to_s
+      rescue URI::InvalidURIError
+        ""
+      end
     end
     
   end

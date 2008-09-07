@@ -73,3 +73,20 @@ describe Page, "with a microformat and a postcode being parsed" do
   end
   
 end
+
+describe Page, "with lots of links" do
+  
+  before(:each) do
+    OpenURI.should_receive(:open_uri).and_return(page_as_string('single_microformat.html'))
+    @page = Page.new("http://russelldavies.typepad.com/eggbaconchipsandbeans/")
+  end
+  
+  it "should be able to extract them all" do
+    @page.links.length.should == 181
+  end
+  
+  it "should be able to extract just the internal links" do
+    @page.internal_links.length.should == 71
+    @page.internal_links.reject { |l| l =~ /^http:\/\/russelldavies.typepad.com\/eggbaconchipsandbeans\// }.length.should == 0 
+  end
+end

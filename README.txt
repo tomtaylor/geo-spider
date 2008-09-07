@@ -1,10 +1,11 @@
 = geo-spider
 
-* FIX (url)
+* http://geospider.rubyforge.org
+* http://github.com/tomtaylor/geo-spider
 
 == DESCRIPTION:
 
-FIX (describe your package)
+Tools for spidering websites/blogs for their geodata.
 
 == FEATURES/PROBLEMS:
 
@@ -16,11 +17,9 @@ FIX (describe your package)
 
 == REQUIREMENTS:
 
-* FIX (list of requirements)
-
-== INSTALL:
-
-* FIX (sudo gem install, anything else)
+* Hpricot
+* open-uri
+* Graticule
 
 == LICENSE:
 

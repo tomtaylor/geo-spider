@@ -20,7 +20,7 @@ module GeoSpider
     end
     
     def title
-      hpricot_doc.at(@title_css_selector).inner_html
+      hpricot_doc.at(@title_css_selector).inner_text
     end
     
     # Returns an array of Location objects based on the locations found in the page.

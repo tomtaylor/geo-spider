@@ -43,34 +43,19 @@ describe Page, "with a single postcode which is being parsed" do
   
 end
 
-describe Page, "with a microformat and a postcode being parsed" do
+describe Page, "with multiple microformats and postcodes being parsed" do
   
   before(:each) do
-    OpenURI.should_receive(:open_uri).and_return(page_as_string('separate_microformat_and_postcode.html'))
+    OpenURI.should_receive(:open_uri).and_return(page_as_string('multiple_postcodes_and_microformats.html'))
     @page = Page.new("http://www.example.com")
     
     mock_geocoder_result = OpenStruct.new( {:location => [51.000000, -1.000000]} )
     Graticule.stub!(:service)
-    Graticule.service.should_receive(:new).and_return(mock_geocoder_result)
+    Graticule.service.should_receive(:new).twice.and_return(mock_geocoder_result)
   end
   
-  it "should find two locations" do
-    @page.locations.length.should == 2
-  end
-  
-  it "should have the right details for the microformat" do
-    location = @page.locations.first
-    location.latitude.should == 51.503571
-    location.longitude.should == -0.0745
-    location.title.should == "Lafone Street"
-  end
-  
-  it "should have the right details for the postcode" do
-    location = @page.locations.last
-    location.latitude.should == 51.0
-    location.longitude.should == -1.0
-    location.title.should == "W1A 1AA"
-    
+  it "should find four locations" do
+    @page.locations.length.should == 4
   end
   
 end

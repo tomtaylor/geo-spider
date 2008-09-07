@@ -8,7 +8,7 @@ module GeoSpider
     attr_reader :url
     
     DEFAULT_CONTENT_CSS_SELECTOR = "body" # Find locations within the entire body by default
-    DEFAULT_TITLE_CSS_SELECTOR = "title"
+    DEFAULT_TITLE_CSS_SELECTOR = "title" # Use the title in the head by deault
     
     # Create a new page based on the URL.
     

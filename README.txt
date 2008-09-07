@@ -21,12 +21,20 @@ It is current in use behind the scenes of the Geoblogomatic <http://www.geoblogo
 
 == SYNOPSIS:
 
+Spider entire sites like so:
+
   require 'geo-spider'
   site = GeoSpider::Site.new("http://www.example.com")
   
   site.each_page do |page|
     puts page.locations.inspect
   end
+  
+Extract geodata from specific page like so:
+
+  require 'geo-spider'
+  page = GeoSpider::Page.new("http://www.nothingtoseehere.net/2008/08/bank_of_asia_headquarters_bang_1.html")
+  puts page.locations.inspect
 
 == REQUIREMENTS:
 

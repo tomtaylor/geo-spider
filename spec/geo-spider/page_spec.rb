@@ -105,3 +105,32 @@ describe Page, "which is part of a site" do
     @page.internal_links.reject { |l| l =~ /^http:\/\/www.example.com\// }.length.should == 0 
   end
 end
+
+describe Page, "which is finding the title" do
+  
+  before(:each) do
+    OpenURI.should_receive(:open_uri).and_return(page_as_string('page_with_links.html'))
+  end
+  
+  describe "using the default" do
+    
+    before(:each) do
+      @page = Page.new("http://www.example.com")
+    end
+    
+    it "should find the title from the head" do
+      @page.title.should == "Page with Links"
+    end
+  end
+  
+  describe "specifying a h1 css selector" do
+    
+    before(:each) do
+      @page = Page.new("http://www.example.com", :title_css_selector => "h1")
+    end
+    
+    it "should find the title from the h1 tag" do
+      @page.title.should == "Heading 1"
+    end
+  end
+end

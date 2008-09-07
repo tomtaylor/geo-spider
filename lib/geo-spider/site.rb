@@ -4,7 +4,7 @@ module GeoSpider
     
     attr_reader :url
     
-    DEFAULT_REGEXP = /.+/ # Match everything
+    DEFAULT_REGEXP = /.+/ # By default match every URL
     
     def initialize(url)
       @url = URI.parse(url)

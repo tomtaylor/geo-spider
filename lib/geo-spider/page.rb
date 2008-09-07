@@ -16,7 +16,7 @@ module GeoSpider
       @url = url
       @site = options[:site]
       @content_css_selector = options[:content_css_selector] || DEFAULT_CONTENT_CSS_SELECTOR
-      @title_css_selector = options[:title_css_select] || DEFAULT_TITLE_CSS_SELECTOR
+      @title_css_selector = options[:title_css_selector] || DEFAULT_TITLE_CSS_SELECTOR
     end
     
     def title

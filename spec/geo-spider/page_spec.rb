@@ -24,6 +24,7 @@ describe Page, "with a single postcode which is being parsed" do
   before(:each) do
     OpenURI.should_receive(:open_uri).and_return(page_as_string('single_postcode.html'))
     @page = Page.new("http://www.example.com")
+    GeoSpider::Extractors::Postcode.api_key = "waffles"
     mock_geocoder_result = OpenStruct.new( {:location => [51.000000, -1.000000]} )
     Graticule.stub!(:service)
     Graticule.service.should_receive(:new).and_return(mock_geocoder_result)

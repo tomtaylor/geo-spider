@@ -22,14 +22,17 @@ module GeoSpider
         
       end
       
-      def api_key=(api_key)
-        @api_key
+      # You need to set a valid Yahoo API key before the UK postcode geocoding will work. Yahoo have vastly better UK postcode accuracy than the other large mapping providers, apart from perhaps Multimap.
+      
+      def self.api_key=(api_key)
+        @@api_key = api_key
       end
       
       private
       
       def geocoder
-        Graticule.service(:yahoo).new @api_key
+        raise "No Yahoo API key set" unless @@api_key
+        Graticule.service(:yahoo).new @@api_key
       end
       
     end

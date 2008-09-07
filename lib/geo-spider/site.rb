@@ -14,8 +14,7 @@ module GeoSpider
       
       until queue.empty? do
         url = queue.shift
-        page = Page.new(url, :site => self)
-        yield page
+        yield page = Page.new(url, :site => self)
         seen << url
         next_links = (page.internal_links - seen - queue)
         queue.concat(next_links)

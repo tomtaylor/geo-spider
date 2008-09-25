@@ -20,13 +20,17 @@ module GeoSpider
       
       until queue.empty? do
         url = queue.shift
-        page = Page.new(url, options)
-        if url =~ regexp
-          yield page
+        begin
+          page = Page.new(url, options)
+          if url =~ regexp
+            yield page
+          end
+          seen << url
+          next_links = (page.internal_links - seen - queue) # only add internal links that we've not seen or already have queued.
+          queue.concat(next_links)
+        rescue # need to decide what exactly to rescue from, rather than just everything.
+          next
         end
-        seen << url
-        next_links = (page.internal_links - seen - queue) # only add internal links that we've not seen or already have queued.
-        queue.concat(next_links)
       end
     end
     

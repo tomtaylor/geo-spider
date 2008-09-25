@@ -17,6 +17,7 @@ module GeoSpider
       @site = options[:site]
       @content_css_selector = options[:content_css_selector] || DEFAULT_CONTENT_CSS_SELECTOR
       @title_css_selector = options[:title_css_selector] || DEFAULT_TITLE_CSS_SELECTOR
+      hpricot_doc
     end
     
     def title
@@ -43,7 +44,7 @@ module GeoSpider
     
     def internal_links
       raise("Cannot discover internal links without knowing what site this page is part of.") if @site.nil?
-      links.select { |l| internal_url?(l) }
+      links.select { |l| allowed_url?(l) }
     end
     
     private
@@ -56,9 +57,9 @@ module GeoSpider
       open(self.url, 'User-Agent' => GeoSpider::user_agent)
     end
     
-    def internal_url?(url_to_test)
-      # Does it begin with the URL of the site?
-      url_to_test[0, @site.url.to_s.length] == @site.url.to_s
+    def allowed_url?(url_to_test)
+      # Does it begin with the URL of the site and what's the extension?
+      url_to_test[0, @site.url.to_s.length] == @site.url.to_s && !(url_to_test =~ /(mp3|m4a|mov|jpg|png|gif|zip|pdf)$/i)
     end
     
     def normalize_url(link_url)

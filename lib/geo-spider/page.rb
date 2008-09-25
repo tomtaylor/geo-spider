@@ -37,14 +37,14 @@ module GeoSpider
     def links
       hpricot_doc.search("a[@href]").map do |a|
         normalize_url(a.attributes["href"])
-      end.uniq
+      end.uniq.reject { |b| rejected_url?(b) }
     end
     
     # Returns a unique array of internal URLs present in the page as string, normalized to remove anchors. Needs the page to know what site it is part of, or it cannot decide what is an internal link.
     
     def internal_links
       raise("Cannot discover internal links without knowing what site this page is part of.") if @site.nil?
-      links.select { |l| allowed_url?(l) }
+      links.select { |l| internal_url?(l) }
     end
     
     private
@@ -57,9 +57,13 @@ module GeoSpider
       open(self.url, 'User-Agent' => GeoSpider::user_agent)
     end
     
-    def allowed_url?(url_to_test)
+    def internal_url?(url_to_test)
       # Does it begin with the URL of the site and what's the extension?
-      url_to_test[0, @site.url.to_s.length] == @site.url.to_s && !(url_to_test =~ /(mp3|m4a|mov|jpg|png|gif|zip|pdf)$/i)
+      url_to_test[0, @site.url.to_s.length] == @site.url.to_s 
+    end
+    
+    def rejected_url?(url_to_test)
+      url_to_test =~ /(mp3|m4a|mov|jpg|png|gif|zip|pdf)$/i
     end
     
     def normalize_url(link_url)

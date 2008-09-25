@@ -63,7 +63,7 @@ end
 describe Page, "which is not part of a site" do
   
   before(:each) do
-    # OpenURI.should_receive(:open_uri).and_return(page_as_string('page_with_links.html'))
+    OpenURI.should_receive(:open_uri).and_return(page_as_string('page_with_links.html'))
     @page = Page.new("http://www.waffles.com")
   end
   
@@ -88,6 +88,10 @@ describe Page, "which is part of a site" do
   it "should be able to extract just the internal links" do
     @page.internal_links.length.should == 1
     @page.internal_links.reject { |l| l =~ /^http:\/\/www.example.com\// }.length.should == 0 
+  end
+  
+  it "should exclude the media links" do
+    @page.links.should_not include("http://www.example.com/download.mp3")
   end
 end
 

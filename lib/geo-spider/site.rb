@@ -28,7 +28,7 @@ module GeoSpider
           seen << url
           next_links = (page.internal_links - seen - queue) # only add internal links that we've not seen or already have queued.
           queue.concat(next_links)
-        rescue # need to decide what exactly to rescue from, rather than just everything.
+        rescue Timeout::Error => e
           next
         end
       end

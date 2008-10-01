@@ -11,10 +11,11 @@ module GeoSpider
       REGEXP = /(GIR 0AA|[A-PR-UWYZ]([0-9]{1,2}|([A-HK-Y][0-9]|[A-HK-Y][0-9]([0-9]|[ABEHMNPRV-Y]))|[0-9][A-HJKS-UW])(\s*)[0-9][ABD-HJLNP-UW-Z]{2})/i
       
       def locations
-        results = @element.inner_text.scan(REGEXP)
+        results = @element.inner_html.scan(REGEXP)
         results = results.map(&:first)
         
         locations = []
+        
         results.each do |result|
           begin
             p = geocoder.locate(result)
@@ -22,6 +23,8 @@ module GeoSpider
           rescue Graticule::Error
             next
           end
+          
+          return locations
         end
       end
       

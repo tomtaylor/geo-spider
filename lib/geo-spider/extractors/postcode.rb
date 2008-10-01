@@ -14,18 +14,17 @@ module GeoSpider
         results = @element.inner_html.scan(REGEXP)
         results = results.map(&:first)
         
-        locations = []
+        found_locations = []
         
         results.each do |result|
           begin
             p = geocoder.locate(result)
-            locations << Location.new(:latitude => p.latitude, :longitude => p.longitude, :title => result)
-          rescue Graticule::Error
+            found_locations << Location.new(:latitude => p.latitude, :longitude => p.longitude, :title => result)
+          rescue Graticule::Error => e
             next
           end
-          
-          return locations
         end
+        return found_locations
       end
       
       # You need to set a valid Yahoo API key before the UK postcode geocoding will work. Yahoo have vastly better UK postcode accuracy than the other large mapping providers, apart from perhaps Multimap.

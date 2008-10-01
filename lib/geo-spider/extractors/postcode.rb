@@ -15,7 +15,7 @@ module GeoSpider
         results = results.map(&:first)
         
         results.map do |result|
-          latitude, longitude = geocoder.location(result)
+          latitude, longitude = geocoder.locate(result)
           Location.new(:latitude => latitude, :longitude => longitude, :title => result)
         end
       end

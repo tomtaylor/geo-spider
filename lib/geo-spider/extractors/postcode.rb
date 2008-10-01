@@ -14,9 +14,14 @@ module GeoSpider
         results = @element.inner_text.scan(REGEXP)
         results = results.map(&:first)
         
-        results.map do |result|
-          postcode_location = geocoder.locate(result)
-          Location.new(:latitude => postcode_location.latitude, :longitude => postcode_location.longitude, :title => result)
+        locations = []
+        results.each do |result|
+          begin
+            p = geocoder.locate(result)
+            locations << Location.new(:latitude => p.latitude, :longitude => p.longitude, :title => result)
+          rescue Graticule::Error
+            next
+          end
         end
       end
       

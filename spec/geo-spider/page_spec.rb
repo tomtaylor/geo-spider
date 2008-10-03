@@ -25,9 +25,9 @@ describe Page, "with a single postcode which is being parsed" do
     OpenURI.should_receive(:open_uri).and_return(page_as_string('single_postcode.html'))
     @page = Page.new("http://www.example.com")
     GeoSpider::Extractors::Postcode.api_key = "waffles"
-    mock_geocoder_result = OpenStruct.new( {:location => [51.000000, -1.000000]} )
+    mock_geocoder = OpenStruct.new( { :locate => OpenStruct.new({ :longitude => -1.000000, :latitude => 51.000000 })})
     Graticule.stub!(:service)
-    Graticule.service.should_receive(:new).and_return(mock_geocoder_result)
+    Graticule.service.should_receive(:new).and_return(mock_geocoder)
   end
   
   it "should find one location" do
@@ -49,9 +49,9 @@ describe Page, "with multiple microformats and postcodes being parsed" do
     OpenURI.should_receive(:open_uri).and_return(page_as_string('multiple_postcodes_and_microformats.html'))
     @page = Page.new("http://www.example.com")
     
-    mock_geocoder_result = OpenStruct.new( {:location => [51.000000, -1.000000]} )
+    mock_geocoder = OpenStruct.new( { :locate => OpenStruct.new({ :longitude => -1.000000, :latitude => 51.000000 })})
     Graticule.stub!(:service)
-    Graticule.service.should_receive(:new).twice.and_return(mock_geocoder_result)
+    Graticule.service.should_receive(:new).twice.and_return(mock_geocoder)
   end
   
   it "should find four locations" do
@@ -122,4 +122,17 @@ describe Page, "which is finding the title" do
       @page.title.should == "Heading 1"
     end
   end
+end
+
+describe Page, "which is parsing a page with a string in a URL that happens to match a postcode" do
+  
+  before(:each) do
+    OpenURI.should_receive(:open_uri).and_return(page_as_string('postcode_in_url.html'))
+    @page = Page.new("http://www.example.com")
+  end
+  
+  it "should not find any locations" do
+    @page.locations.should be_empty
+  end
+  
 end

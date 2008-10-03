@@ -11,14 +11,14 @@ module GeoSpider
       REGEXP = /(GIR 0AA|[A-PR-UWYZ]([0-9]{1,2}|([A-HK-Y][0-9]|[A-HK-Y][0-9]([0-9]|[ABEHMNPRV-Y]))|[0-9][A-HJKS-UW])(\s*)[0-9][ABD-HJLNP-UW-Z]{2})/i
       
       def locations
-        results = @element.inner_html.scan(REGEXP)
+        results = @element.inner_text.scan(REGEXP)
         results = results.map(&:first)
         
         found_locations = []
         
         results.each do |result|
           begin
-            p = geocoder.locate(result)
+            p = geocoder.locate(:zip => result, :country => "GB")
             found_locations << Location.new(:latitude => p.latitude, :longitude => p.longitude, :title => result)
           rescue Graticule::Error => e
             next
@@ -27,7 +27,7 @@ module GeoSpider
         return found_locations
       end
       
-      # You need to set a valid Yahoo API key before the UK postcode geocoding will work. Yahoo have vastly better UK postcode accuracy than the other large mapping providers, apart from perhaps Multimap.
+      # You need to set a valid Multimap API key before the UK postcode geocoding will work. Multimap have the most accurate UK postcode geocoding I've discovered.
       
       def self.api_key=(api_key)
         @@api_key = api_key
@@ -36,8 +36,8 @@ module GeoSpider
       private
       
       def geocoder
-        raise "No Yahoo API key set" unless @@api_key
-        Graticule.service(:yahoo).new @@api_key
+        raise "No Multimap API key set" unless @@api_key
+        Graticule.service(:multimap).new @@api_key
       end
       
     end

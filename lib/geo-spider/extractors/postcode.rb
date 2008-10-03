@@ -18,7 +18,7 @@ module GeoSpider
         
         results.each do |result|
           begin
-            p = geocoder.locate(:zip => result, :country => "GB")
+            p = geocoder.locate(:postal_code => result, :country => "GB")
             found_locations << Location.new(:latitude => p.latitude, :longitude => p.longitude, :title => result)
           rescue Graticule::Error => e
             next

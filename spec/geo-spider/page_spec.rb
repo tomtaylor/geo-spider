@@ -136,3 +136,16 @@ describe Page, "which is parsing a page with a string in a URL that happens to m
   end
   
 end
+
+describe Page, "which is a parsing a page which doesn't contain the specific content_css_selector" do
+  
+  before(:each) do
+    OpenURI.should_receive(:open_uri).and_return(page_as_string('page_with_links.html'))
+    @page = Page.new("http://www.example.com", :content_css_selector => "notreal")
+  end
+  
+  it "should raise InvalidElement" do
+    lambda { @page.locations }.should raise_error(InvalidElement)
+  end
+  
+end

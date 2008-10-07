@@ -1,0 +1,1 @@
+class InvalidElement < Exception; end

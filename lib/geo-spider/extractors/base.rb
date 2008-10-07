@@ -5,6 +5,7 @@ module GeoSpider
     class Base
       
       def initialize(element)
+        raise InvalidElement if element.class != Hpricot::Elem || element.nil?
         @element = element
       end
   

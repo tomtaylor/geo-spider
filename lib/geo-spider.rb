@@ -5,6 +5,7 @@ require 'rubygems'
 require 'hpricot'
 require 'open-uri'
 
+require 'geo-spider/exceptions'
 require 'geo-spider/page'
 require 'geo-spider/site'
 

@@ -6,7 +6,9 @@ README.txt
 Rakefile
 config/hoe.rb
 config/requirements.rb
+geo-spider.gemspec
 lib/geo-spider.rb
+lib/geo-spider/exceptions.rb
 lib/geo-spider/extractors/base.rb
 lib/geo-spider/extractors/master.rb
 lib/geo-spider/extractors/microformat.rb
@@ -21,6 +23,7 @@ script/generate
 setup.rb
 spec/assets/pages/multiple_postcodes_and_microformats.html
 spec/assets/pages/page_with_links.html
+spec/assets/pages/postcode_in_url.html
 spec/assets/pages/separate_microformat_and_postcode.html
 spec/assets/pages/single_microformat.html
 spec/assets/pages/single_postcode.html

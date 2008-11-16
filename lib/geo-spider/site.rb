@@ -12,7 +12,6 @@ module GeoSpider
     
     def each_page(options = {}, &block)
       regexp = options.delete(:regexp) || DEFAULT_REGEXP
-      
       options = options.merge( { :site => self } )
       
       queue = [self.url.to_s]

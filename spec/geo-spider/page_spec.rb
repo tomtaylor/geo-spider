@@ -149,3 +149,19 @@ describe Page, "which is a parsing a page which doesn't contain the specific con
   end
   
 end
+
+describe Page, "which is parsing a page which has an empty body" do
+  
+  before(:each) do
+    OpenURI.should_receive(:open_uri).and_return(page_as_string('empty_body.html'))
+    @page = Page.new("http://www.example.com", :content_css_selector => ".entry-body")
+  end
+  
+  it "should return no locations" do
+    @page.locations.should be_empty
+  end
+  
+  it "should not raise" do
+    lambda { @page.locations }.should_not raise_error(InvalidElement)
+  end
+end

@@ -9,6 +9,7 @@ module GeoSpider
     
     DEFAULT_CONTENT_CSS_SELECTOR = "body" # Find locations within the entire body by default
     DEFAULT_TITLE_CSS_SELECTOR = "title" # Use the title in the head by deault
+    DO_NOT_SPIDER_REGEXP = /(mp3|m4a|mov|jpg|png|gif|zip|pdf)$/i # do not spider these extensions by default
     
     # Create a new page based on the URL.
     
@@ -17,6 +18,7 @@ module GeoSpider
       @site = options[:site]
       @content_css_selector = options[:content_css_selector] || DEFAULT_CONTENT_CSS_SELECTOR
       @title_css_selector = options[:title_css_selector] || DEFAULT_TITLE_CSS_SELECTOR
+      @do_not_spider_regexp = options[:do_not_spider_regexp] || DO_NOT_SPIDER_REGEXP
       hpricot_doc
     end
     
@@ -63,7 +65,7 @@ module GeoSpider
     end
     
     def rejected_url?(url_to_test)
-      url_to_test =~ /(mp3|m4a|mov|jpg|png|gif|zip|pdf)$/i
+      url_to_test =~ @do_not_spider_regexp
     end
     
     def normalize_url(link_url)

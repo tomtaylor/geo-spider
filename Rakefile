@@ -6,8 +6,7 @@ require File.dirname(__FILE__) + '/lib/geo-spider'
 $hoe = Hoe.new('geo-spider', GeoSpider::VERSION) do |p|
   p.developer('Tom Taylor', 'tom@tomtaylor.co.uk')
   p.changes              = p.paragraphs_of("History.txt", 0..1).join("\n\n")
-  p.post_install_message = 'PostInstall.txt' # TODO remove if post-install message not required
-  p.rubyforge_name       = p.name # TODO this is default value
+  p.rubyforge_name       = 'geospider'
   p.extra_deps         = [
     ['hpricot','>= 0.6.164'],
     ['graticule', '>= 0.2.8']
